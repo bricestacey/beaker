@@ -46,3 +46,13 @@ Run the server
 --------------
 
     foreman start
+
+Deploying to Heroku
+-------------------
+
+Beaker uses heroku's nginx-buildpack (https://github.com/ryandotsmith/nginx-buildpack)
+to better handle traffic.  The buildpacks are located in `.buildpacks`
+
+Before you deploy to heroku, you must run:
+
+    heroku config:set BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git

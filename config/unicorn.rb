@@ -1,3 +1,5 @@
+require 'fileutils'
+
 # If you have a very small app you may be able to
 # increase this, but in general 3 workers seems to
 # work best
@@ -10,6 +12,9 @@ preload_app true
 # Immediately restart any workers that
 # haven't responded within 30 seconds
 timeout 30
+
+# Listen to the nginx socket
+listen '/tmp/nginx.socket'
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
@@ -26,6 +31,8 @@ before_fork do |server, worker|
     #Resque.redis.quit
     #Rails.logger.info('Disconnected from Redis')
   #end
+
+  FileUtils.touch('/tmp/app-initialized')
 end
 
 after_fork do |server, worker|
